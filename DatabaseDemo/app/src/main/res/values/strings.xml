@@ -6,6 +6,10 @@
     <string name="enter_employee_salary">Enter employee salary</string>
     <string name="add_employee">Add Employee</string>
     <string name="view_employees">View Employees</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="edit_employee">Edit Employee</string>
+    <string name="save">Save</string>
     <array name="departments">
         <item>Technical</item>
         <item>Support</item>
