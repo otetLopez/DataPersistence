@@ -13,7 +13,13 @@ import java.util.List;
 public class EmployeeActivity extends AppCompatActivity {
 
     private static final String TAG = "EmployeeActivity";
-    SQLiteDatabase mDatabase;
+    /** SQLiteOpenHelper : Commented out to use databasehelper
+     SQLiteDatabase mDatabase;
+     */
+    /** SQLiteOpenHelper: Instead */
+    DatabaseHelper mDatabase;
+    /** */
+
     List<Employee> employeeList;
     ListView listView;
 
@@ -25,13 +31,26 @@ public class EmployeeActivity extends AppCompatActivity {
         listView = findViewById(R.id.lvEmployees);
         employeeList = new ArrayList<>();
 
-        mDatabase = openOrCreateDatabase(MainActivity.DATABASE_NAME, MODE_PRIVATE, null);
+        /** SQLiteOpenHelper : Commented out to use databasehelper
+         mDatabase = openOrCreateDatabase(MainActivity.DATABASE_NAME, MODE_PRIVATE, null);
+         */
+        /** SQLiteOpenHelper: Instead */
+        mDatabase = new DatabaseHelper(this);
+        /** */
+
         loadEmployees();
     }
 
     private void loadEmployees() {
-        String sql = "SELECT * FROM employees";
-        Cursor cursor = mDatabase.rawQuery(sql, null);
+
+        /** SQLiteOpenHelper : Commented out to use databasehelper
+         String sql = "SELECT * FROM employees";
+         Cursor cursor = mDatabase.rawQuery(sql, null);
+         */
+        /** SQLiteOpenHelper: Instead */
+        Cursor cursor = mDatabase.getAllEmployees();
+        /** */
+
 
         if (cursor.moveToFirst()) {
             do {

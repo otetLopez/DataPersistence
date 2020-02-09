@@ -15,10 +15,12 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener  {
 
+    /** SQLiteOpenHelper : Commented out to use databasehelper
     // In order to use the data base you should give a name to your database
     public static final String DATABASE_NAME = "myDatabase";
     SQLiteDatabase mDatabase;
-
+    */
+    DatabaseHelper mDatabase;
 
     EditText editTextName, editTextSalary;
     Spinner spinnerDept;
@@ -35,11 +37,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.buttonAddEmployee).setOnClickListener(this);
         findViewById(R.id.tvViewEmployee).setOnClickListener(this);
 
+        /** SQLiteOpenHelper : Commented out to use databasehelper
         //in order to open or create database we use the following code
         mDatabase = openOrCreateDatabase(DATABASE_NAME, MODE_PRIVATE, null);
         createTable();
+         */
+
+        /** SQLiteOpenHelper: Instead */
+        mDatabase = new DatabaseHelper(this);
     }
 
+    /** SQLiteOpenHelper : Commented out to use databasehelper
     private void createTable() {
         String sql = "CREATE TABLE IF NOT EXISTS employees (" +
                 "id INTEGER NOT NULL CONSTRAINT employee_pk PRIMARY KEY AUTOINCREMENT, " +
@@ -49,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 "salary DOUBLE NOT NULL);";
         mDatabase.execSQL(sql);
     }
+    */
 
     @Override
     public void onClick(View view) {
@@ -87,9 +96,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
+        /** SQLiteOpenHelper : Commented out to use databasehelper
         String sql = "INSERT INTO employees (name, department, joiningdate, salary)" +
                 "VALUES (?, ?, ?, ?)";
         mDatabase.execSQL(sql, new String[]{name, dept, joiningDate, salary});
-        Toast.makeText(this, "Employee added", Toast.LENGTH_SHORT).show();
+         Toast.makeText(this, "Employee added", Toast.LENGTH_SHORT).show();
+         */
+
+        /** SQLiteOpenHelper: Instead */
+        if(mDatabase.addEmployee(name, dept, joiningDate, Double.parseDouble(salary)))
+            Toast.makeText(this, "Employee added", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(this, "Employee not added", Toast.LENGTH_SHORT).show();
+
+        /** */
+
+
     }
 }
